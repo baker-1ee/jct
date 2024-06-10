@@ -13,6 +13,16 @@
     </select>
 
     <insert id="insertMember" parameterType="com.org.example.member.vo.MemberSaveVO">
-
+        <![CDATA[
+            INSERT INTO MEMBER (
+                     MEMBER_ID
+                    ,NAME
+                    ,CREATED_DT
+                ) VALUES (
+                     #{memberId}
+                    ,#{name}
+                    ,SYSDATE
+                )
+        ]]>
     </insert>
 </mapper>
