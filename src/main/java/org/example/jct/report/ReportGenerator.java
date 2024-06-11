@@ -1,15 +1,18 @@
 package org.example.jct.report;
 
-import java.util.Map;
-import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
+import org.example.jct.data.Query;
 
+import java.util.List;
+
+@Slf4j
 public class ReportGenerator {
 
-    public void generateReport(Map<String, Set<String>> analysisResults) {
-        analysisResults.forEach((queryId, keywords) -> {
-            System.out.println("Query ID: " + queryId);
-            System.out.println("Keywords: " + keywords);
-            System.out.println();
+    public void generateReport(List<Query> queryList) {
+        queryList.forEach(query -> {
+            log.info("Query ID: {}", query.getId());
+            log.info("SQL: {}", query.getSql());
+            log.info("Oracle Keywords: {}", query.getKeywords());
         });
     }
 

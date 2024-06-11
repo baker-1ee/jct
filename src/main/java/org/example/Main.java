@@ -1,6 +1,8 @@
 package org.example;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.jct.analyzer.SqlAnalyzer;
+import org.example.jct.data.Query;
 import org.example.jct.parser.MyBatisXmlParser;
 import org.example.jct.parser.XmlFileExplorer;
 import org.example.jct.report.ReportGenerator;
@@ -8,10 +10,9 @@ import org.example.jct.report.ReportGenerator;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+@Slf4j
 public class Main {
     public static void main(String[] args) {
         String directory = "/Users/a452609/IdeaProjects/jct/src/main/resources/mock/mybatis";
@@ -22,21 +23,13 @@ public class Main {
         ReportGenerator reportGenerator = new ReportGenerator();
 
         List<File> xmlFiles = fileExplorer.findXmlFiles(directory);
-        Map<String, Set<String>> analysisResults = xmlFiles.stream()
-                .flatMap(file -> {
-                    try {
-                        Map<String, String> queries = xmlParser.parse(file);
-                        return queries.entrySet().stream();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return Stream.empty();
-                    }
-                })
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> sqlAnalyzer.analyze(entry.getValue())
-                ));
+        Map<String, String> queries = xmlParser.parse(xmlFiles);
 
-        reportGenerator.generateReport(analysisResults);
+        List<Query> queryList = queries.entrySet()
+                .stream()
+                .map(entry -> Query.of(entry.getKey(), entry.getValue(), sqlAnalyzer.analyze(entry.getValue())))
+                .collect(Collectors.toList());
+
+        reportGenerator.generateReport(queryList);
     }
 }

@@ -19,11 +19,12 @@ public class SqlAnalyzer {
             SQL_KEYWORDS_PATTERN = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
         } catch (IOException e) {
             e.printStackTrace();
+
         }
     }
 
     public Set<String> analyze(String sql) {
-        return SQL_KEYWORDS_PATTERN.matcher(sql.toUpperCase()).results()  // SQL을 대문자로 변환
+        return SQL_KEYWORDS_PATTERN.matcher(sql).results()  // SQL을 대문자로 변환
                 .map(matchResult -> matchResult.group().toUpperCase())
                 .collect(Collectors.toSet());
     }
