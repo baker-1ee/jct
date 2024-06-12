@@ -1,0 +1,4 @@
+<!DOCTYPE configuration SYSTEM "classpath:dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 기타 설정 -->
+</configuration>

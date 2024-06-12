@@ -1,31 +1,28 @@
 package org.example.jct.analyzer;
 
-import org.example.jct.util.KeywordLoader;
-
-import java.io.IOException;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class SqlAnalyzer {
 
-    private static Pattern SQL_KEYWORDS_PATTERN;
-
-    static {
-        try {
-            List<String> keywords = KeywordLoader.loadKeywords("src/main/resources/oracleKeywords.txt");
-            String patternString = "\\b(" + String.join("|", keywords) + ")\\b";
-            SQL_KEYWORDS_PATTERN = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
+    private static final Pattern FUNCTION_PATTERN = Pattern.compile("\\b[A-Z_][A-Z0-9_]*\\b(?=\\()", Pattern.CASE_INSENSITIVE);
 
     public Set<String> analyze(String sql) {
-        return SQL_KEYWORDS_PATTERN.matcher(sql).results()  // SQL을 대문자로 변환
-                .map(matchResult -> matchResult.group().toUpperCase())
-                .collect(Collectors.toSet());
+        Set<String> result = new LinkedHashSet<>();
+
+        // Match defined keywords
+        Matcher matcher = KeywordEnum.ORACLE_PATTERN.matcher(sql);
+        while (matcher.find()) {
+            result.add(matcher.group().toUpperCase());
+        }
+
+        // Match functions not defined in KeywordEnum
+        Matcher functionMatcher = FUNCTION_PATTERN.matcher(sql);
+        while (functionMatcher.find()) {
+            result.add(functionMatcher.group().toUpperCase());
+        }
+        return result;
     }
 }
