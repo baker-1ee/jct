@@ -1,6 +1,7 @@
 package org.example.jct.parser;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.jct.data.ParsedQuery;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -10,47 +11,28 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 public class MyBatisXmlParser {
 
-    public Map<String, String> parse(File file) {
-        Map<String, String> queries = new HashMap<>();
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            // DTD 검증 비활성화
-            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
-            factory.setFeature("http://xml.org/sax/features/validation", false);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            builder.setEntityResolver(new EntityResolver() {
-                @Override
-                public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
-                    if (systemId.contains("mybatis-3-mapper.dtd")) {
-                        InputStream dtdStream = getClass().getClassLoader().getResourceAsStream("dtd/mybatis-3-mapper.dtd");
-                        return new InputSource(dtdStream);
-                    } else if (systemId.contains("mybatis-3-config.dtd")) {
-                        InputStream dtdStream = getClass().getClassLoader().getResourceAsStream("dtd/mybatis-3-config.dtd");
-                        return new InputSource(dtdStream);
-                    }
-                    return null;
-                }
-            });
-            Document document = builder.parse(file);
-            Element root = document.getDocumentElement();
+    private static final List<String> ELEMENT_TAG_NAMES = Arrays.asList("select", "insert", "update", "delete", "sql");
 
-            String[] elements = {"select", "insert", "update", "delete", "sql"};
-            for (String elementName : elements) {
-                NodeList nodeList = root.getElementsByTagName(elementName);
+    public List<ParsedQuery> parse(File file) {
+        List<ParsedQuery> queries = new ArrayList<>();
+        try {
+            Element rootElement = getElement(file);
+            for (String tagName : ELEMENT_TAG_NAMES) {
+                NodeList nodeList = rootElement.getElementsByTagName(tagName);
                 for (int i = 0; i < nodeList.getLength(); i++) {
                     Element element = (Element) nodeList.item(i);
-                    String id = element.getAttribute("id");
-                    String sql = element.getTextContent().trim();
-                    queries.put(id, sql);
+                    queries.add(ParsedQuery.of(file, element));
                 }
             }
         } catch (Exception e) {
@@ -58,4 +40,34 @@ public class MyBatisXmlParser {
         }
         return queries;
     }
+
+    private Element getElement(File file) throws ParserConfigurationException, SAXException, IOException {
+        DocumentBuilder builder = getDocumentBuilder();
+        Document document = builder.parse(file);
+        return document.getDocumentElement();
+    }
+
+    private DocumentBuilder getDocumentBuilder() throws ParserConfigurationException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        // XML DTD 검증 비활성화 (폐쇄망에서 동작하려면 원격 dtd 파일이 아닌 로컬 dtd 파일로 검증해야하기 때문에)
+        factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        factory.setFeature("http://xml.org/sax/features/validation", false);
+        // XML DTD 검증 시 로컬 dtd 파일 사용하도록 설정
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        builder.setEntityResolver(new EntityResolver() {
+            @Override
+            public InputSource resolveEntity(String publicId, String systemId) throws SAXException, IOException {
+                if (systemId.contains("mybatis-3-mapper.dtd")) {
+                    InputStream dtdStream = getClass().getClassLoader().getResourceAsStream("dtd/mybatis-3-mapper.dtd");
+                    return new InputSource(dtdStream);
+                } else if (systemId.contains("mybatis-3-config.dtd")) {
+                    InputStream dtdStream = getClass().getClassLoader().getResourceAsStream("dtd/mybatis-3-config.dtd");
+                    return new InputSource(dtdStream);
+                }
+                return null;
+            }
+        });
+        return builder;
+    }
+
 }

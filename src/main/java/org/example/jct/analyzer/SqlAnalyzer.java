@@ -1,5 +1,8 @@
 package org.example.jct.analyzer;
 
+import org.example.jct.data.OracleQuery;
+import org.example.jct.data.ParsedQuery;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -9,20 +12,21 @@ public class SqlAnalyzer {
 
     private static final Pattern FUNCTION_PATTERN = Pattern.compile("\\b[A-Z_][A-Z0-9_]*\\b(?=\\()", Pattern.CASE_INSENSITIVE);
 
-    public Set<String> analyze(String sql) {
-        Set<String> result = new LinkedHashSet<>();
+    public OracleQuery analyze(ParsedQuery query) {
+        Set<String> oracleKeywords = new LinkedHashSet<>();
 
         // Match defined keywords
-        Matcher matcher = KeywordEnum.ORACLE_PATTERN.matcher(sql);
+        Matcher matcher = KeywordEnum.ORACLE_PATTERN.matcher(query.getSql());
         while (matcher.find()) {
-            result.add(matcher.group().toUpperCase());
+            oracleKeywords.add(matcher.group().toUpperCase());
         }
 
         // Match functions not defined in KeywordEnum
-        Matcher functionMatcher = FUNCTION_PATTERN.matcher(sql);
+        Matcher functionMatcher = FUNCTION_PATTERN.matcher(query.getSql());
         while (functionMatcher.find()) {
-            result.add(functionMatcher.group().toUpperCase());
+            oracleKeywords.add(functionMatcher.group().toUpperCase());
         }
-        return result;
+
+        return OracleQuery.of(query, oracleKeywords);
     }
 }
