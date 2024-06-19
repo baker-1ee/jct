@@ -1,13 +1,16 @@
 package org.example.jct.analyzer;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toMap;
+
+@AllArgsConstructor
 @Getter
 public enum KeywordEnum {
     SELECT("SELECT", "SELECT"),
@@ -38,156 +41,58 @@ public enum KeywordEnum {
     NVL("NVL", "IFNULL"),
     SYSDATE("SYSDATE", "CURRENT_DATE"),
     SYSTIMESTAMP("SYSTIMESTAMP", "CURRENT_TIMESTAMP"),
-    ADD("ADD", "ADD"),
-    ALL("ALL", "ALL"),
-    ALTER("ALTER", "ALTER"),
     ANY("ANY", "ANY"),
     BY("BY", "BY"),
     CASE("CASE", "CASE"),
-    CHECK("CHECK", "CHECK"),
-    CLUSTER("CLUSTER", "CLUSTER"),
-    COLUMN("COLUMN", "COLUMN"),
-    COMMENT("COMMENT", "COMMENT"),
-    COMPRESS("COMPRESS", "COMPRESS"),
-    CONNECT("CONNECT", "CONNECT"),
-    CREATE("CREATE", "CREATE"),
-    CURRENT("CURRENT", "CURRENT"),
     DATE("DATE", "DATE"),
     DECIMAL("DECIMAL", "DECIMAL"),
     DEFAULT("DEFAULT", "DEFAULT"),
     DESC("DESC", "DESC"),
     DISTINCT("DISTINCT", "DISTINCT"),
-    DROP("DROP", "DROP"),
     ELSE("ELSE", "ELSE"),
-    EXCLUSIVE("EXCLUSIVE", "EXCLUSIVE"),
-    FILE("FILE", "FILE"),
     FLOAT("FLOAT", "FLOAT"),
     FOR("FOR", "FOR"),
-    GRANT("GRANT", "GRANT"),
-    IDENTIFIED("IDENTIFIED", "IDENTIFIED"),
-    IMMEDIATE("IMMEDIATE", "IMMEDIATE"),
-    INCREMENT("INCREMENT", "INCREMENT"),
-    INDEX("INDEX", "INDEX"),
-    INITIAL("INITIAL", "INITIAL"),
     INTEGER("INTEGER", "INTEGER"),
-    INTERSECT("INTERSECT", "INTERSECT"),
     INTO("INTO", "INTO"),
-    IS("IS", "IS"),
-    LEVEL("LEVEL", "LEVEL"),
-    LOCK("LOCK", "LOCK"),
     LONG("LONG", "LONG"),
-    MAXEXTENTS("MAXEXTENTS", "MAXEXTENTS"),
-    MINUS("MINUS", "MINUS"),
-    MLSLABEL("MLSLABEL", "MLSLABEL"),
-    MODE("MODE", "MODE"),
-    MODIFY("MODIFY", "MODIFY"),
-    NOAUDIT("NOAUDIT", "NOAUDIT"),
-    NOCOMPRESS("NOCOMPRESS", "NOCOMPRESS"),
-    NOWAIT("NOWAIT", "NOWAIT"),
     NULL("NULL", "NULL"),
     NUMBER("NUMBER", "NUMBER"),
     OF("OF", "OF"),
-    OFFLINE("OFFLINE", "OFFLINE"),
-    ONLINE("ONLINE", "ONLINE"),
-    OPTION("OPTION", "OPTION"),
-    ORDER("ORDER", "ORDER"),
-    PCTFREE("PCTFREE", "PCTFREE"),
-    PRIOR("PRIOR", "PRIOR"),
-    PUBLIC("PUBLIC", "PUBLIC"),
-    RAW("RAW", "RAW"),
-    RENAME("RENAME", "RENAME"),
-    RESOURCE("RESOURCE", "RESOURCE"),
-    REVOKE("REVOKE", "REVOKE"),
-    SESSION("SESSION", "SESSION"),
     SET("SET", "SET"),
-    SHARE("SHARE", "SHARE"),
-    SIZE("SIZE", "SIZE"),
-    SMALLINT("SMALLINT", "SMALLINT"),
-    START("START", "START"),
-    SUCCESSFUL("SUCCESSFUL", "SUCCESSFUL"),
-    SYNONYM("SYNONYM", "SYNONYM"),
-    TABLE("TABLE", "TABLE"),
     THEN("THEN", "THEN"),
-    TO("TO", "TO"),
-    TRIGGER("TRIGGER", "TRIGGER"),
-    UID("UID", "UID"),
-    UNIQUE("UNIQUE", "UNIQUE"),
-    USER("USER", "USER"),
-    VALIDATE("VALIDATE", "VALIDATE"),
     VALUES("VALUES", "VALUES"),
-    VARCHAR("VARCHAR", "VARCHAR"),
-    VARCHAR2("VARCHAR2", "VARCHAR2"),
-    VIEW("VIEW", "VIEW"),
-    WHENEVER("WHENEVER", "WHENEVER"),
-    WITH("WITH", "WITH"),
+    VARCHAR("VARCHAR", "VARCHAR", false, "Characterset 확인하여 한글의 바이트 수 확인 필요합니다."),
+    VARCHAR2("VARCHAR2", "VARCHAR2", false, "Characterset 확인하여 한글의 바이트 수 확인 필요합니다."),
+    WITH("WITH", "WITH", false, "수작업 필요합니다."),
     // Functions
     ABS("ABS", "ABS"),
-    ACOS("ACOS", "ACOS"),
-    ASIN("ASIN", "ASIN"),
-    ATAN("ATAN", "ATAN"),
-    ATAN2("ATAN2", "ATAN2"),
     CEIL("CEIL", "CEIL"),
-    COS("COS", "COS"),
-    COSH("COSH", "COSH"),
-    EXP("EXP", "EXP"),
     FLOOR("FLOOR", "FLOOR"),
-    LN("LN", "LN"),
-    LOG("LOG", "LOG"),
     MOD("MOD", "MOD"),
     POWER("POWER", "POWER"),
     ROUND("ROUND", "ROUND"),
-    SIGN("SIGN", "SIGN"),
-    SIN("SIN", "SIN"),
-    SINH("SINH", "SINH"),
-    SQRT("SQRT", "SQRT"),
-    TAN("TAN", "TAN"),
-    TANH("TANH", "TANH"),
-    TRUNC("TRUNC", "TRUNC"),
-    ASCII("ASCII", "ASCII"),
-    CHR("CHR", "CHR"),
     CONCAT("CONCAT", "CONCAT"),
-    INITCAP("INITCAP", "INITCAP"),
     INSTR("INSTR", "INSTR"),
     LENGTH("LENGTH", "LENGTH"),
     LOWER("LOWER", "LOWER"),
     LPAD("LPAD", "LPAD"),
     LTRIM("LTRIM", "LTRIM"),
-    NLS_INITCAP("NLS_INITCAP", "NLS_INITCAP"),
-    NLS_LOWER("NLS_LOWER", "NLS_LOWER"),
-    NLS_UPPER("NLS_UPPER", "NLS_UPPER"),
     REPLACE("REPLACE", "REPLACE"),
     RPAD("RPAD", "RPAD"),
     RTRIM("RTRIM", "RTRIM"),
-    SOUNDEX("SOUNDEX", "SOUNDEX"),
     SUBSTR("SUBSTR", "SUBSTR"),
-    TRANSLATE("TRANSLATE", "TRANSLATE"),
     UPPER("UPPER", "UPPER"),
     ADD_MONTHS("ADD_MONTHS", "DATE_ADD"),
     CURRENT_DATE("CURRENT_DATE", "CURRENT_DATE"),
     CURRENT_TIMESTAMP("CURRENT_TIMESTAMP", "CURRENT_TIMESTAMP"),
-    DBTIMEZONE("DBTIMEZONE", "DBTIMEZONE"),
-    EXTRACT("EXTRACT", "EXTRACT"),
-    LAST_DAY("LAST_DAY", "LAST_DAY"),
-    LOCALTIMESTAMP("LOCALTIMESTAMP", "LOCALTIMESTAMP"),
-    MONTHS_BETWEEN("MONTHS_BETWEEN", "TIMESTAMPDIFF"),
-    NEW_TIME("NEW_TIME", "CONVERT_TZ"),
-    NEXT_DAY("NEXT_DAY", "DATE_ADD"),
-    ROUND_DATE("ROUND", "ROUND"),
-    SESSIONTIMEZONE("SESSIONTIMEZONE", "SESSIONTIMEZONE"),
-    TRUNC_DATE("TRUNC", "TRUNCATE"),
     CAST("CAST", "CAST"),
     CONVERT("CONVERT", "CONVERT"),
-    HEXTORAW("HEXTORAW", "UNHEX"),
-    RAWTOHEX("RAWTOHEX", "HEX"),
     TO_CHAR("TO_CHAR", "CAST"),
     TO_DATE("TO_DATE", "STR_TO_DATE"),
     TO_NUMBER("TO_NUMBER", "CAST"),
     TO_TIMESTAMP("TO_TIMESTAMP", "STR_TO_DATE"),
-    TO_YMINTERVAL("TO_YMINTERVAL", "INTERVAL"),
-    TO_DSINTERVAL("TO_DSINTERVAL", "INTERVAL"),
     AVG("AVG", "AVG"),
     COUNT("COUNT", "COUNT"),
-    GROUPING("GROUPING", "GROUPING"),
     MAX("MAX", "MAX"),
     MIN("MIN", "MIN"),
     SUM("SUM", "SUM"),
@@ -195,16 +100,31 @@ public enum KeywordEnum {
     DECODE("DECODE", "IF"),
     GREATEST("GREATEST", "GREATEST"),
     LEAST("LEAST", "LEAST"),
-    NVL2("NVL2", "IF");
+    NVL2("NVL2", "IF", false, "NVL2(expr1, expr2, expr3)를 IF(expr1 IS NOT NULL, expr2, expr3)로 변환합니다."),
+    // 의문의 키워드
+    MYSTERIOUS_KEYWORD("의문의 키워드", "확인필요", false, "의문의 키워드가 추출되었습니다. 확인이 필요합니다.");
 
     private final String oracle;
     private final String mysql;
+    private final boolean availAutoConversion; // 자동 변환 가능 여부
+    private final String guideline; // 안내사항
+
+    KeywordEnum(String oracle, String mysql) {
+        this(oracle, mysql, true, "");
+    }
+
+    private static final Map<String, KeywordEnum> ORACLE_TO_ENUM_MAP = Arrays.stream(values())
+            .collect(toMap(KeywordEnum::getOracle, t -> t));
+
+    public static KeywordEnum findByOracleKeyword(String oracleKeyword) {
+        return ORACLE_TO_ENUM_MAP.getOrDefault(oracleKeyword, MYSTERIOUS_KEYWORD);
+    }
 
     public static final Pattern ORACLE_PATTERN = Pattern.compile(
             "\\b(" +
                     Arrays.stream(KeywordEnum.values())
                             .map(KeywordEnum::getOracle)
-                            .collect(Collectors.joining("|"))
+                            .collect(joining("|"))
                     + ")\\b",
             Pattern.CASE_INSENSITIVE
     );

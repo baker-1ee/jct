@@ -35,7 +35,7 @@ public class ExcelReportGenerator implements ReportGenerator {
                 row.createCell(0).setCellValue(query.getFilePath());
                 row.createCell(1).setCellValue(query.getQueryId());
                 row.createCell(2).setCellValue(query.getSql());
-                row.createCell(3).setCellValue(String.join(",", query.getKeywords()));
+                row.createCell(3).setCellValue(query.getKeywords());
             }
 
             // Write to file

@@ -15,6 +15,8 @@ public class ConsoleReportGenerator implements ReportGenerator {
             log.info("Query ID: {}", query.getQueryId());
             log.info("SQL: {}", query.getSql());
             log.info("Oracle Keywords: {}", query.getKeywords());
+            log.info("자동 변환 가능 여부: {}", query.isAbleAutoConversion());
+            log.info("안내사항: {}", query.getGuidelines());
         });
     }
 
