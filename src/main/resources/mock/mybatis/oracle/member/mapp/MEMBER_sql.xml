@@ -18,10 +18,12 @@
             INSERT INTO MEMBER (
                      MEMBER_ID
                     ,NAME
+                    ,NICKNAME
                     ,CREATED_DT
                 ) VALUES (
                      #{memberId}
                     ,#{name}
+                    ,LPAD(#{nickName}, 20, '*'),
                     ,SYSDATE
                 )
         ]]>

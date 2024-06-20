@@ -3,7 +3,7 @@ package org.example.jct.data;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.example.jct.analyzer.KeywordEnum;
+import org.example.jct.analyzer.Keyword;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 @Builder
 public class OracleQuery {
     private ParsedQuery query;
-    private Set<KeywordEnum> keywords;
+    private Set<Keyword> keywords;
 
-    public static OracleQuery of(ParsedQuery query, Set<KeywordEnum> oracleKeywords) {
+    public static OracleQuery of(ParsedQuery query, Set<Keyword> oracleKeywords) {
         return OracleQuery.builder()
                 .query(query)
                 .keywords(oracleKeywords)
@@ -36,19 +36,19 @@ public class OracleQuery {
 
     public String getKeywords() {
         return keywords.stream()
-                .map(KeywordEnum::getOracle)
+                .map(Keyword::getOracle)
                 .collect(Collectors.joining(", "));
     }
 
     public Boolean isAbleAutoConversion() {
         return keywords.stream()
-                .allMatch(KeywordEnum::isAvailAutoConversion);
+                .allMatch(Keyword::isAvailAutoConversion);
     }
 
     public String getGuidelines() {
         return keywords.stream()
-                .map(KeywordEnum::getGuideline)
-                .filter(e -> !e.isEmpty())
+                .filter(Keyword::needToNotify)
+                .map(Keyword::getGuideline)
                 .collect(Collectors.joining("\n"));
     }
 }

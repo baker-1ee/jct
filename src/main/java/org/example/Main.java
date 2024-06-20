@@ -5,7 +5,7 @@ import org.example.jct.data.OracleQuery;
 import org.example.jct.data.ParsedQuery;
 import org.example.jct.parser.MyBatisXmlParser;
 import org.example.jct.parser.XmlFileExplorer;
-import org.example.jct.report.ConsoleReportGenerator;
+import org.example.jct.report.ExcelReportGenerator;
 import org.example.jct.report.ReportGenerator;
 
 import java.io.File;
@@ -48,8 +48,8 @@ public class Main {
 
     // 분석 report 생성
     private static void generateReport(List<OracleQuery> queries) {
-        ReportGenerator reportGenerator = new ConsoleReportGenerator();
-//        ReportGenerator reportGenerator = new ExcelReportGenerator();
+//        ReportGenerator reportGenerator = new ConsoleReportGenerator();
+        ReportGenerator reportGenerator = new ExcelReportGenerator();
         reportGenerator.generateReport(queries);
     }
 

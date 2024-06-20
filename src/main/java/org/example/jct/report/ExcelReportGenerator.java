@@ -27,6 +27,8 @@ public class ExcelReportGenerator implements ReportGenerator {
             headerRow.createCell(1).setCellValue("query iD");
             headerRow.createCell(2).setCellValue("sql");
             headerRow.createCell(3).setCellValue("oracle keywords");
+            headerRow.createCell(4).setCellValue("자동 변환 가능 여부");
+            headerRow.createCell(5).setCellValue("안내사항");
 
             // Fill data rows
             int rowNum = 1;
@@ -36,6 +38,8 @@ public class ExcelReportGenerator implements ReportGenerator {
                 row.createCell(1).setCellValue(query.getQueryId());
                 row.createCell(2).setCellValue(query.getSql());
                 row.createCell(3).setCellValue(query.getKeywords());
+                row.createCell(4).setCellValue(query.isAbleAutoConversion());
+                row.createCell(5).setCellValue(query.getGuidelines());
             }
 
             // Write to file
