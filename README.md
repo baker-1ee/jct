@@ -3,3 +3,9 @@
 ```
 ./gradlew clean shadowJar
 ```
+
+## 실행
+
+```
+java -jar jct.jar {{root directory path}}
+```
