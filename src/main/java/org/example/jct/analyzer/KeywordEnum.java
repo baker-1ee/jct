@@ -13,6 +13,9 @@ import static java.util.stream.Collectors.toMap;
 @AllArgsConstructor
 @Getter
 public enum KeywordEnum implements Keyword {
+    NVL("NVL", "IFNULL", true, "[자동 변환 가능] NVL -> IFNULL"),
+    NVL2("NVL2", "IF", false, "NVL2(expr1, expr2, expr3)는 IF(expr1 IS NOT NULL, expr2, expr3)로 변환할 수 있습니다."),
+
     SELECT("SELECT", "SELECT", true, ""),
     INSERT("INSERT", "INSERT", true, ""),
     UPDATE("UPDATE", "UPDATE", true, ""),
@@ -38,7 +41,7 @@ public enum KeywordEnum implements Keyword {
     LIKE("LIKE", "LIKE", true, ""),
     IS_NULL("IS NULL", "IS NULL", true, ""),
     IS_NOT_NULL("IS NOT NULL", "IS NOT NULL", true, ""),
-    NVL("NVL", "IFNULL", true, ""),
+
     SYSDATE("SYSDATE", "NOW()", true, "[자동 변환 가능] SYSDATE -> NOW()"),
     SYSTIMESTAMP("SYSTIMESTAMP", "CURRENT_TIMESTAMP", false, "확인중"),
     ANY("ANY", "ANY", true, ""),
@@ -100,7 +103,7 @@ public enum KeywordEnum implements Keyword {
     DECODE("DECODE", "IF", false, "오라클의 DECODE 함수는 MySQL의 IF 함수로 변경할 때, DECODE(expr, search, result, default)를 IF(expr = search, result, default)로 변환해야 합니다."),
     GREATEST("GREATEST", "GREATEST", true, ""),
     LEAST("LEAST", "LEAST", true, ""),
-    NVL2("NVL2", "IF", false, "NVL2(expr1, expr2, expr3)를 IF(expr1 IS NOT NULL, expr2, expr3)로 변환할 수 있습니다."),
+
     ;
 
     private final String oracle;
