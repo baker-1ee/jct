@@ -1,5 +1,6 @@
 package org.example.jct.analyzer;
 
+import com.sun.tools.javac.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,6 +16,7 @@ import static java.util.stream.Collectors.toMap;
 public enum KeywordEnum implements Keyword {
     NVL("NVL", "IFNULL", true, "[자동 변환 가능] NVL -> IFNULL"),
     NVL2("NVL2", "IF", false, "NVL2(expr1, expr2, expr3)는 IF(expr1 IS NOT NULL, expr2, expr3)로 변환할 수 있습니다."),
+    SYSDATE("SYSDATE", "NOW()", true, "[자동 변환 가능] SYSDATE -> NOW()"),
 
     SELECT("SELECT", "SELECT", true, ""),
     INSERT("INSERT", "INSERT", true, ""),
@@ -41,8 +43,6 @@ public enum KeywordEnum implements Keyword {
     LIKE("LIKE", "LIKE", true, ""),
     IS_NULL("IS NULL", "IS NULL", true, ""),
     IS_NOT_NULL("IS NOT NULL", "IS NOT NULL", true, ""),
-
-    SYSDATE("SYSDATE", "NOW()", true, "[자동 변환 가능] SYSDATE -> NOW()"),
     SYSTIMESTAMP("SYSTIMESTAMP", "CURRENT_TIMESTAMP", false, "확인중"),
     ANY("ANY", "ANY", true, ""),
     BY("BY", "BY", true, ""),
@@ -121,7 +121,8 @@ public enum KeywordEnum implements Keyword {
     );
 
     public static Keyword findByOracleKeyword(String oracleKeyword) {
-        return ORACLE_TO_ENUM_MAP.getOrDefault(oracleKeyword, UnknownKeyword.from(oracleKeyword));
+        String upperOracleKeyword = StringUtils.toUpperCase(oracleKeyword);
+        return ORACLE_TO_ENUM_MAP.getOrDefault(upperOracleKeyword, UnknownKeyword.from(upperOracleKeyword));
     }
 
     private static final Map<String, Keyword> ORACLE_TO_ENUM_MAP = Arrays.stream(values())
