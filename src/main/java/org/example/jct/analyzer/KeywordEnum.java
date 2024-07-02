@@ -1,6 +1,5 @@
 package org.example.jct.analyzer;
 
-import com.sun.tools.javac.util.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -121,7 +120,7 @@ public enum KeywordEnum implements Keyword {
     );
 
     public static Keyword findByOracleKeyword(String oracleKeyword) {
-        String upperOracleKeyword = StringUtils.toUpperCase(oracleKeyword);
+        String upperOracleKeyword = oracleKeyword.toUpperCase();
         return ORACLE_TO_ENUM_MAP.getOrDefault(upperOracleKeyword, UnknownKeyword.from(upperOracleKeyword));
     }
 

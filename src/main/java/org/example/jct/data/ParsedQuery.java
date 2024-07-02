@@ -36,7 +36,7 @@ public class ParsedQuery {
     @ToString
     @Builder
     @Getter
-    private static class Key {
+    public static class Key {
 
         private String filePath;
         private String id;

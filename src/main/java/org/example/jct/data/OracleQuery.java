@@ -22,6 +22,10 @@ public class OracleQuery {
                 .build();
     }
 
+    public ParsedQuery getKey() {
+        return query;
+    }
+
     public String getFilePath() {
         return query.getFilePath();
     }
@@ -50,5 +54,14 @@ public class OracleQuery {
                 .filter(Keyword::needToNotify)
                 .map(Keyword::getGuideline)
                 .collect(Collectors.joining("\n"));
+    }
+
+    public String convert() {
+        String sql = query.getSql();
+        for (Keyword keyword : keywords) {
+            // 대소문자 구분 없이 전체 단어 일치
+            sql = sql.replaceAll("(?i)\\b" + keyword.getOracle() + "\\b", keyword.getMysql());
+        }
+        return sql;
     }
 }

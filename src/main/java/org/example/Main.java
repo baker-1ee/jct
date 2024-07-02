@@ -1,6 +1,8 @@
 package org.example;
 
 import org.example.jct.analyzer.SqlAnalyzer;
+import org.example.jct.converter.QueryConverter;
+import org.example.jct.converter.XmlFileCopier;
 import org.example.jct.data.OracleQuery;
 import org.example.jct.data.ParsedQuery;
 import org.example.jct.parser.MyBatisXmlParser;
@@ -16,11 +18,25 @@ import java.util.stream.Collectors;
 public class Main {
 
     public static void main(String[] args) {
-        String rootDirectoryPath = getRootDirectoryPath(args);
-        List<File> xmlFiles = collectXmlFiles(rootDirectoryPath);
+        String sourceDirectoryPath = getSourceDirectoryPath(args);
+        List<File> xmlFiles = collectXmlFiles(sourceDirectoryPath);
         List<ParsedQuery> parsedQueryList = parseQuery(xmlFiles);
         List<OracleQuery> oracleQueryList = scanOracleKeyword(parsedQueryList);
         generateReport(oracleQueryList);
+
+        // xml 파일 copy
+        String targetDirectoryPath = getTargetDirectoryPath(args);
+        if (targetDirectoryPath == null) return;
+
+        XmlFileCopier xmlFileCopier = new XmlFileCopier(sourceDirectoryPath, targetDirectoryPath);
+        xmlFileCopier.copy(xmlFiles);
+
+        // 자동 변환 가능 query 변환
+        List<File> targetXmlFiles = collectXmlFiles(targetDirectoryPath);
+        List<ParsedQuery> parsedTargetQueryList = parseQuery(targetXmlFiles);
+        List<OracleQuery> oracleTargetQueryList = scanOracleKeyword(parsedTargetQueryList);
+        QueryConverter queryConverter = new QueryConverter();
+        queryConverter.convert(targetXmlFiles, oracleTargetQueryList);
     }
 
     // root directory 하위의 xml 파일 수집
@@ -54,11 +70,16 @@ public class Main {
     }
 
     // argument 검증
-    private static String getRootDirectoryPath(String[] args) {
+    private static String getSourceDirectoryPath(String[] args) {
         if (args.length < 1) {
-            System.out.println("Usage: java -jar jct.jar <root directory path>");
+            System.out.println("Usage: java -jar jct.jar {{source directory path}}");
             System.exit(1);
         }
         return args[0];
+    }
+
+    // argument 검증
+    private static String getTargetDirectoryPath(String[] args) {
+        return args.length == 2 ? args[1] : null;
     }
 }

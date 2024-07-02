@@ -41,6 +41,23 @@ public class MyBatisXmlParser {
         return queries;
     }
 
+    public List<Element> getElements(File file) {
+        List<Element> elements = new ArrayList<>();
+        try {
+            Element rootElement = getElement(file);
+            for (String tagName : ELEMENT_TAG_NAMES) {
+                NodeList nodeList = rootElement.getElementsByTagName(tagName);
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    Element element = (Element) nodeList.item(i);
+                    elements.add(element);
+                }
+            }
+        } catch (Exception e) {
+            log.error("MyBatisXmlParser error", e);
+        }
+        return elements;
+    }
+
     private Element getElement(File file) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilder builder = getDocumentBuilder();
         Document document = builder.parse(file);
