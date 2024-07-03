@@ -2,6 +2,7 @@ package org.example.jct.parser;
 
 import lombok.extern.slf4j.Slf4j;
 import org.example.jct.data.ParsedQuery;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Component
 public class MyBatisXmlParser {
 
     private static final List<String> ELEMENT_TAG_NAMES = Arrays.asList("select", "insert", "update", "delete", "sql");

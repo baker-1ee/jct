@@ -1,14 +1,25 @@
 package org.example;
 
+import lombok.RequiredArgsConstructor;
 import org.example.jct.AnalyzeService;
 import org.example.jct.MigrateService;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public class Main {
+@SpringBootApplication
+@RequiredArgsConstructor
+public class Main implements CommandLineRunner {
 
-    private static final AnalyzeService analyzeService = new AnalyzeService();
-    private static final MigrateService migrateService = new MigrateService();
+    private final AnalyzeService analyzeService;
+    private final MigrateService migrateService;
 
     public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+    }
+
+    @Override
+    public void run(String... args) {
         // 분석 및 변환
         if (args.length == 2) {
             String rulePath = args[0];
@@ -22,9 +33,9 @@ public class Main {
             String sourceDirectoryPath = args[2];
             analyzeService.analyze(sourceDirectoryPath);
         } else {
-            System.out.println("====================================== usage ======================================" +
-                    "| 분석 및 변환 : java -jar jct.jar [rule.json file path] [source directory path]     |" +
-                    "| 분석만      : java -jar jct.jar -a [rule.json file path] [source directory path]  |" +
+            System.out.println("====================================== usage ======================================\n" +
+                    "| 분석 및 변환 : java -jar jct.jar [rule.json file path] [source directory path]     \n" +
+                    "| 분석만      : java -jar jct.jar -a [rule.json file path] [source directory path]  \n" +
                     "====================================== usage ======================================");
         }
     }

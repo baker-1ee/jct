@@ -1,5 +1,6 @@
 package org.example.jct;
 
+import lombok.RequiredArgsConstructor;
 import org.example.jct.analyzer.SqlAnalyzer;
 import org.example.jct.converter.QueryConverter;
 import org.example.jct.converter.XmlFileCopier;
@@ -7,19 +8,22 @@ import org.example.jct.data.OracleQuery;
 import org.example.jct.data.ParsedQuery;
 import org.example.jct.parser.MyBatisXmlParser;
 import org.example.jct.parser.XmlFileExplorer;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class MigrateService {
 
-    private final XmlFileExplorer fileExplorer = new XmlFileExplorer();
-    private final XmlFileCopier fileCopier = new XmlFileCopier();
-    private final MyBatisXmlParser xmlParser = new MyBatisXmlParser();
-    private final SqlAnalyzer sqlAnalyzer = new SqlAnalyzer();
-    private final QueryConverter queryConverter = new QueryConverter();
+    private final XmlFileExplorer fileExplorer;
+    private final XmlFileCopier fileCopier;
+    private final MyBatisXmlParser xmlParser;
+    private final SqlAnalyzer sqlAnalyzer;
+    private final QueryConverter queryConverter;
 
     /**
      * 쿼리 자동 변환

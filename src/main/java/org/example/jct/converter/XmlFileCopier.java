@@ -1,6 +1,7 @@
 package org.example.jct.converter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 @Slf4j
+@Component
 public class XmlFileCopier {
     /**
      * 쿼리 변환 작업 중일 수 있으므로 이미 target driectory 에 XML 파일이 존재하면 그대로 둔다.

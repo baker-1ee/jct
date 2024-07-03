@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.jct.data.OracleQuery;
 import org.example.jct.data.ParsedQuery;
 import org.example.jct.parser.MyBatisXmlParser;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 
 import java.io.File;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Component
 public class QueryConverter {
 
     public void convert(List<File> xmlFiles, List<OracleQuery> oracleQueryList) {
