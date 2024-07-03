@@ -24,7 +24,7 @@
                      #{memberId}
                     ,#{name}
                     ,LPAD(#{nickName}, 20, '*'),
-                    ,SYSDATE
+                    ,sysdate
                 )
         ]]>
     </insert>

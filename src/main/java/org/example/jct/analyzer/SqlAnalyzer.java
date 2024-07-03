@@ -1,8 +1,11 @@
 package org.example.jct.analyzer;
 
+import lombok.RequiredArgsConstructor;
+import org.example.jct.RuleService;
 import org.example.jct.data.OracleQuery;
 import org.example.jct.data.ParsedQuery;
-import org.springframework.stereotype.Component;
+import org.example.jct.rule.Rule;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -12,8 +15,11 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 // 키워드 분석은 대소문자 구분하지 않고, 대문자로 변환 후 비교
-@Component
+@Service
+@RequiredArgsConstructor
 public class SqlAnalyzer {
+
+    private final RuleService ruleService;
 
     private static final Pattern FUNCTION_PATTERN = Pattern.compile("\\b[A-Z_][A-Z0-9_]*\\b(?=\\()", Pattern.CASE_INSENSITIVE);
 
@@ -24,20 +30,18 @@ public class SqlAnalyzer {
     }
 
     private OracleQuery analyze(ParsedQuery query) {
-        Set<Keyword> oracleKeywords = new LinkedHashSet<>();
+        Set<Rule> oracleKeywords = new LinkedHashSet<>();
 
-        // Match defined keywords
-        Matcher matcher = KeywordEnum.ORACLE_PATTERN.matcher(query.getSql());
+        // Match defined rules
+        Matcher matcher = ruleService.getOraclePattern().matcher(query.getSql());
         while (matcher.find()) {
-            Keyword knownKeyword = KeywordEnum.findByOracleKeyword(matcher.group());
-            oracleKeywords.add(knownKeyword);
+            oracleKeywords.add(ruleService.findByOracleKeyword(matcher.group()));
         }
 
-        // Match functions not defined in KeywordEnum
+        // Match functions not defined in rules
         Matcher functionMatcher = FUNCTION_PATTERN.matcher(query.getSql());
         while (functionMatcher.find()) {
-            Keyword knownKeyword = KeywordEnum.findByOracleKeyword(functionMatcher.group());
-            oracleKeywords.add(knownKeyword);
+            oracleKeywords.add(ruleService.findByOracleKeyword(functionMatcher.group()));
         }
 
         return OracleQuery.of(query, oracleKeywords);

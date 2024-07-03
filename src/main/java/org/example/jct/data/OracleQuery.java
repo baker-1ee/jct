@@ -3,7 +3,7 @@ package org.example.jct.data;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.example.jct.analyzer.Keyword;
+import org.example.jct.rule.Rule;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 @Builder
 public class OracleQuery {
     private ParsedQuery query;
-    private Set<Keyword> keywords;
+    private Set<Rule> keywords;
 
-    public static OracleQuery of(ParsedQuery query, Set<Keyword> oracleKeywords) {
+    public static OracleQuery of(ParsedQuery query, Set<Rule> oracleKeywords) {
         return OracleQuery.builder()
                 .query(query)
                 .keywords(oracleKeywords)
@@ -40,25 +40,25 @@ public class OracleQuery {
 
     public String getKeywords() {
         return keywords.stream()
-                .map(Keyword::getOracle)
+                .map(Rule::getOracle)
                 .collect(Collectors.joining(", "));
     }
 
     public Boolean isAbleAutoConversion() {
         return keywords.stream()
-                .allMatch(Keyword::isAvailAutoConversion);
+                .allMatch(Rule::isAvailAutoConversion);
     }
 
     public String getGuidelines() {
         return keywords.stream()
-                .filter(Keyword::needToNotify)
-                .map(Keyword::getGuideline)
+                .filter(Rule::needToNotify)
+                .map(Rule::getNotice)
                 .collect(Collectors.joining("\n"));
     }
 
     public String convert() {
         String sql = query.getSql();
-        for (Keyword keyword : keywords) {
+        for (Rule keyword : keywords) {
             // 대소문자 구분 없이 전체 단어 일치
             sql = sql.replaceAll("(?i)\\b" + keyword.getOracle() + "\\b", keyword.getMysql());
         }

@@ -1,20 +1,22 @@
-package org.example.jct.analyzer;
+package org.example.jct.rule;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@RequiredArgsConstructor
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class UnknownKeyword implements Keyword {
+public class UnknownKeyword implements Rule {
 
-    private final String oracle;
-    private final String mysql;
-    private final boolean availAutoConversion;
-    private final String notice;
+    private String oracle;
+    private String mysql;
+    private boolean availAutoConversion;
+    private String notice;
 
-    public static Keyword from(String oracleKeyword) {
+    public static Rule from(String oracleKeyword) {
         return UnknownKeyword.builder()
                 .oracle(oracleKeyword)
                 .availAutoConversion(false)
@@ -28,7 +30,9 @@ public class UnknownKeyword implements Keyword {
     }
 
     @Override
-    public String getGuideline() {
+    public String getNotice() {
         return String.format("[%s] %s", oracle, notice);
     }
+
+
 }

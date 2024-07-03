@@ -1,6 +1,6 @@
-package org.example.jct.analyzer;
+package org.example.jct.rule;
 
-public interface Keyword {
+public interface Rule {
 
     String getOracle();
 
@@ -10,5 +10,6 @@ public interface Keyword {
 
     boolean needToNotify();
 
-    String getGuideline();
+    String getNotice();
+
 }
