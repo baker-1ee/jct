@@ -4,16 +4,24 @@ import org.example.jct.data.OracleQuery;
 import org.example.jct.data.ParsedQuery;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 // 키워드 분석은 대소문자 구분하지 않고, 대문자로 변환 후 비교
 public class SqlAnalyzer {
 
     private static final Pattern FUNCTION_PATTERN = Pattern.compile("\\b[A-Z_][A-Z0-9_]*\\b(?=\\()", Pattern.CASE_INSENSITIVE);
 
-    public OracleQuery analyze(ParsedQuery query) {
+    public List<OracleQuery> analyze(List<ParsedQuery> queries) {
+        return queries.stream()
+                .map(this::analyze)
+                .collect(Collectors.toList());
+    }
+
+    private OracleQuery analyze(ParsedQuery query) {
         Set<Keyword> oracleKeywords = new LinkedHashSet<>();
 
         // Match defined keywords
@@ -32,4 +40,5 @@ public class SqlAnalyzer {
 
         return OracleQuery.of(query, oracleKeywords);
     }
+
 }

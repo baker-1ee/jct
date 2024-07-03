@@ -17,14 +17,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class MyBatisXmlParser {
 
     private static final List<String> ELEMENT_TAG_NAMES = Arrays.asList("select", "insert", "update", "delete", "sql");
 
-    public List<ParsedQuery> parse(File file) {
+    /**
+     * xml 파일에서 mybatis 구문 파싱하여 query 추출
+     */
+    public List<ParsedQuery> parse(List<File> xmlFiles) {
+        return xmlFiles.stream()
+                .map(this::parse)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+    }
+
+    private List<ParsedQuery> parse(File file) {
         List<ParsedQuery> queries = new ArrayList<>();
         try {
             Element rootElement = getElement(file);

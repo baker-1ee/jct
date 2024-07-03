@@ -11,24 +11,19 @@ import java.util.List;
 
 @Slf4j
 public class XmlFileCopier {
-    private final Path sourceDirectory;
-    private final Path targetDirectory;
-
-    public XmlFileCopier(String sourceDirectoryPath, String targetDirectoryPath) {
-        sourceDirectory = Paths.get(sourceDirectoryPath);
-        targetDirectory = Paths.get(targetDirectoryPath);
-    }
-
     /**
      * 쿼리 변환 작업 중일 수 있으므로 이미 target driectory 에 XML 파일이 존재하면 그대로 둔다.
      */
-    public void copy(List<File> xmlFiles) {
+    public void copy(List<File> xmlFiles, String srcDirPath, String tgtDirPath) {
         try {
-            Files.createDirectories(targetDirectory);
+            Path srcDir = Paths.get(srcDirPath);
+            Path tgtDir = Paths.get(tgtDirPath);
+
+            Files.createDirectories(tgtDir);
 
             for (File xmlFile : xmlFiles) {
                 Path sourcePath = xmlFile.toPath();
-                Path targetPath = targetDirectory.resolve(sourceDirectory.relativize(sourcePath));
+                Path targetPath = tgtDir.resolve(srcDir.relativize(sourcePath));
                 Files.createDirectories(targetPath.getParent());
 
                 if (!Files.exists(targetPath)) {
