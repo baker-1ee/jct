@@ -10,6 +10,7 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -30,7 +31,7 @@ public class QueryConverter {
         for (File file : files) {
             try {
                 Path filePath = file.toPath();
-                String content = new String(Files.readAllBytes(filePath));
+                String content = Files.readString(filePath, StandardCharsets.UTF_8);
 
                 List<Element> elements = queryParser.getElements(file);
                 for (Element element : elements) {
@@ -50,7 +51,7 @@ public class QueryConverter {
                     }
                 }
 
-                Files.write(filePath, content.getBytes());
+                Files.writeString(filePath, content, StandardCharsets.UTF_8);
 
             } catch (IOException e) {
                 log.error("QueryConverter error {}", file.getPath(), e);

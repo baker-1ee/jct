@@ -42,5 +42,6 @@ public class Main implements CommandLineRunner {
                     "| 분석만      : java -jar jct.jar -a [rule.json file path] [source directory path]  \n" +
                     "====================================== usage ======================================");
         }
+        System.out.println("완료되었습니다.");
     }
 }

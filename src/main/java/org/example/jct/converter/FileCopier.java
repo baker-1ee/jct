@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class FileCopier {
-    
+
     public void copy(List<File> files, String srcDirPath, String tgtDirPath) {
         try {
             Path srcDir = Paths.get(srcDirPath);
@@ -26,16 +27,17 @@ public class FileCopier {
                 Path targetPath = tgtDir.resolve(srcDir.relativize(sourcePath));
                 Files.createDirectories(targetPath.getParent());
 
-                if (!Files.exists(targetPath)) {
-                    Files.copy(sourcePath, targetPath);
-                } else {
-                    log.info("File already exists, skipping: {}", targetPath);
-                }
+                // 파일을 UTF-8 인코딩으로 읽기
+                String content = Files.readString(sourcePath, StandardCharsets.UTF_8);
+
+                // 파일을 UTF-8 인코딩으로 쓰기
+                Files.writeString(targetPath, content, StandardCharsets.UTF_8);
+
+                log.info("File copied: {}", targetPath);
             }
         } catch (IOException e) {
-            log.error("Query Converter error", e);
+            log.error("File Copier error", e);
             throw new RuntimeException(e);
         }
-
     }
 }
