@@ -1,4 +1,4 @@
-package org.example.jct.data;
+package org.example.jct.parser;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

@@ -5,10 +5,10 @@ import java.util.Optional;
 
 public interface RuleRepository {
 
-    void saveAll(List<? extends Rule> keywords);
+    void saveAll(List<? extends Rule> rules);
 
     List<Rule> findAll();
 
-    Optional<Rule> findByOracleKeyword(String oracleKeyword);
+    Optional<Rule> findByFrom(String from);
 
 }

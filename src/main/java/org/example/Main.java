@@ -1,9 +1,9 @@
 package org.example;
 
 import lombok.RequiredArgsConstructor;
-import org.example.jct.AnalyzeService;
-import org.example.jct.MigrateService;
-import org.example.jct.RuleService;
+import org.example.jct.service.AnalyzeService;
+import org.example.jct.service.MigrateService;
+import org.example.jct.service.RuleService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

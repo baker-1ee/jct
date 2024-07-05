@@ -2,523 +2,523 @@
   {
     "oracle": "NVL",
     "mysql": "IFNULL",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": "[자동 변환 가능] NVL -> IFNULL"
   },
   {
     "oracle": "NVL2",
     "mysql": "IF",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "NVL2(expr1, expr2, expr3)는 IF(expr1 IS NOT NULL, expr2, expr3)로 변환할 수 있습니다."
   },
   {
     "oracle": "SYSDATE",
     "mysql": "NOW()",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": "[자동 변환 가능] SYSDATE -> NOW()"
   },
   {
     "oracle": "SELECT",
     "mysql": "SELECT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "INSERT",
     "mysql": "INSERT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "UPDATE",
     "mysql": "UPDATE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "DELETE",
     "mysql": "DELETE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "FROM",
     "mysql": "FROM",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "WHERE",
     "mysql": "WHERE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "JOIN",
     "mysql": "JOIN",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "LEFT",
     "mysql": "LEFT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "RIGHT",
     "mysql": "RIGHT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "INNER",
     "mysql": "INNER",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "OUTER",
     "mysql": "OUTER",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "GROUP BY",
     "mysql": "GROUP BY",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "ORDER BY",
     "mysql": "ORDER BY",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "HAVING",
     "mysql": "HAVING",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "UNION",
     "mysql": "UNION",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "EXISTS",
     "mysql": "EXISTS",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "IN",
     "mysql": "IN",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "AS",
     "mysql": "AS",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "ON",
     "mysql": "ON",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "AND",
     "mysql": "AND",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "OR",
     "mysql": "OR",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "NOT",
     "mysql": "NOT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "LIKE",
     "mysql": "LIKE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "IS NULL",
     "mysql": "IS NULL",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "IS NOT NULL",
     "mysql": "IS NOT NULL",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "SYSTIMESTAMP",
     "mysql": "CURRENT_TIMESTAMP",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "확인중"
   },
   {
     "oracle": "ANY",
     "mysql": "ANY",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "BY",
     "mysql": "BY",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "CASE",
     "mysql": "CASE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "DATE",
     "mysql": "DATE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "DECIMAL",
     "mysql": "DECIMAL",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "DEFAULT",
     "mysql": "DEFAULT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "DESC",
     "mysql": "DESC",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "DISTINCT",
     "mysql": "DISTINCT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "ELSE",
     "mysql": "ELSE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "FLOAT",
     "mysql": "FLOAT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "FOR",
     "mysql": "FOR",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "INTEGER",
     "mysql": "INTEGER",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "INTO",
     "mysql": "INTO",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "LONG",
     "mysql": "LONG",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "NULL",
     "mysql": "NULL",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "NUMBER",
     "mysql": "NUMBER",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "OF",
     "mysql": "OF",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "SET",
     "mysql": "SET",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "THEN",
     "mysql": "THEN",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "VALUES",
     "mysql": "VALUES",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "VARCHAR",
     "mysql": "VARCHAR",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "Characterset 확인하여 한글의 바이트 수 확인 필요합니다."
   },
   {
     "oracle": "VARCHAR2",
     "mysql": "VARCHAR2",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "Characterset 확인하여 한글의 바이트 수 확인 필요합니다."
   },
   {
     "oracle": "WITH",
     "mysql": "WITH",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "전체 쿼리를 확인 후 작업 필요합니다."
   },
   {
     "oracle": "ABS",
     "mysql": "ABS",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "CEIL",
     "mysql": "CEIL",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "FLOOR",
     "mysql": "FLOOR",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "MOD",
     "mysql": "MOD",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "POWER",
     "mysql": "POWER",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "ROUND",
     "mysql": "ROUND",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "CONCAT",
     "mysql": "CONCAT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "INSTR",
     "mysql": "INSTR",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "LENGTH",
     "mysql": "LENGTH",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "LOWER",
     "mysql": "LOWER",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "LPAD",
     "mysql": "LPAD",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "LPAD(str, len, padstr) 에서 Oracle의 경우에는 len 이 byte 단위이며, MySql 에서는 byte 단위가 아닌 character 단위이므로 characterset 확인 후 작업해주세요."
   },
   {
     "oracle": "LTRIM",
     "mysql": "LTRIM",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "REPLACE",
     "mysql": "REPLACE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "RPAD",
     "mysql": "RPAD",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "RPAD(str, len, padstr) 에서 Oracle의 경우에는 len 이 byte 단위이며, MySql 에서는 byte 단위가 아닌 character 단위이므로 characterset 확인 후 작업해주세요."
   },
   {
     "oracle": "RTRIM",
     "mysql": "RTRIM",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "SUBSTR",
     "mysql": "SUBSTR",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "UPPER",
     "mysql": "UPPER",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "ADD_MONTHS",
     "mysql": "DATE_ADD",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "DATE_ADD(연산을 수행할 날짜, INTERVAL n 단위) 형태로 변경해주세요."
   },
   {
     "oracle": "CURRENT_DATE",
     "mysql": "CURRENT_DATE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "CURRENT_TIMESTAMP",
     "mysql": "CURRENT_TIMESTAMP",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "CAST",
     "mysql": "CAST",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "CONVERT",
     "mysql": "CONVERT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "TO_CHAR",
     "mysql": "CAST",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "TO_CHAR(value)를 CAST(value AS CHAR)로 변환해야 합니다."
   },
   {
     "oracle": "TO_DATE",
     "mysql": "STR_TO_DATE",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "TO_DATE(date_string, format)를 STR_TO_DATE(date_string, format)으로 변환해야 합니다."
   },
   {
     "oracle": "TO_NUMBER",
     "mysql": "CAST",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "오라클의 TO_NUMBER 함수를 MySQL의 CAST 함수로 변환할 때, TO_NUMBER(expr)를 CAST(expr AS DECIMAL)로 변환하며, 숫자 형식과 소수점 자릿수를 주의해야 합니다."
   },
   {
     "oracle": "TO_TIMESTAMP",
     "mysql": "STR_TO_DATE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "AVG",
     "mysql": "AVG",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "COUNT",
     "mysql": "COUNT",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "MAX",
     "mysql": "MAX",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "MIN",
     "mysql": "MIN",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "SUM",
     "mysql": "SUM",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "COALESCE",
     "mysql": "COALESCE",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "DECODE",
     "mysql": "IF",
-    "availAutoConversion": false,
+    "isAuto": false,
     "notice": "오라클의 DECODE 함수는 MySQL의 IF 함수로 변경할 때, DECODE(expr, search, result, default)를 IF(expr = search, result, default)로 변환해야 합니다."
   },
   {
     "oracle": "GREATEST",
     "mysql": "GREATEST",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   },
   {
     "oracle": "LEAST",
     "mysql": "LEAST",
-    "availAutoConversion": true,
+    "isAuto": true,
     "notice": ""
   }
 ]

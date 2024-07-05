@@ -12,18 +12,16 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class XmlFileCopier {
-    /**
-     * 쿼리 변환 작업 중일 수 있으므로 이미 target driectory 에 XML 파일이 존재하면 그대로 둔다.
-     */
-    public void copy(List<File> xmlFiles, String srcDirPath, String tgtDirPath) {
+public class FileCopier {
+    
+    public void copy(List<File> files, String srcDirPath, String tgtDirPath) {
         try {
             Path srcDir = Paths.get(srcDirPath);
             Path tgtDir = Paths.get(tgtDirPath);
 
             Files.createDirectories(tgtDir);
 
-            for (File xmlFile : xmlFiles) {
+            for (File xmlFile : files) {
                 Path sourcePath = xmlFile.toPath();
                 Path targetPath = tgtDir.resolve(srcDir.relativize(sourcePath));
                 Files.createDirectories(targetPath.getParent());

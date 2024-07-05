@@ -2,14 +2,14 @@ package org.example.jct.rule;
 
 public interface Rule {
 
-    String getOracle();
+    String getFrom();
 
-    String getMysql();
+    String getTo();
 
-    boolean isAvailAutoConversion();
-
-    boolean needToNotify();
+    Boolean isAvailAutoConversion();
 
     String getNotice();
+
+    Boolean needToNotify();
 
 }

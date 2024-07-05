@@ -1,9 +1,11 @@
 package org.example.jct.report;
 
-import org.example.jct.data.OracleQuery;
+import org.example.jct.analyzer.AnalyzedQuery;
 
 import java.util.List;
 
 public interface ReportGenerator {
-    void generateReport(List<OracleQuery> queries);
+
+    void generate(List<AnalyzedQuery> queries);
+
 }

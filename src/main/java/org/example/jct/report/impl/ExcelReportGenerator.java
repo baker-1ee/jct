@@ -1,11 +1,12 @@
-package org.example.jct.report;
+package org.example.jct.report.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.example.jct.data.OracleQuery;
+import org.example.jct.analyzer.AnalyzedQuery;
+import org.example.jct.report.ReportGenerator;
 import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
@@ -19,7 +20,7 @@ import java.util.List;
 public class ExcelReportGenerator implements ReportGenerator {
 
     @Override
-    public void generateReport(List<OracleQuery> queries) {
+    public void generate(List<AnalyzedQuery> queries) {
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("report");
 
@@ -34,12 +35,12 @@ public class ExcelReportGenerator implements ReportGenerator {
 
             // Fill data rows
             int rowNum = 1;
-            for (OracleQuery query : queries) {
+            for (AnalyzedQuery query : queries) {
                 Row row = sheet.createRow(rowNum++);
                 row.createCell(0).setCellValue(query.getFilePath());
                 row.createCell(1).setCellValue(query.getQueryId());
                 row.createCell(2).setCellValue(query.getSql());
-                row.createCell(3).setCellValue(query.getKeywords());
+                row.createCell(3).setCellValue(query.getRules());
                 row.createCell(4).setCellValue(query.isAbleAutoConversion());
                 row.createCell(5).setCellValue(query.getGuidelines());
             }

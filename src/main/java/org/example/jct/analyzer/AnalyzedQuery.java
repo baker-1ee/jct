@@ -1,8 +1,9 @@
-package org.example.jct.data;
+package org.example.jct.analyzer;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.example.jct.parser.ParsedQuery;
 import org.example.jct.rule.Rule;
 
 import java.util.Set;
@@ -11,14 +12,14 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class OracleQuery {
+public class AnalyzedQuery {
     private ParsedQuery query;
-    private Set<Rule> keywords;
+    private Set<Rule> rules;
 
-    public static OracleQuery of(ParsedQuery query, Set<Rule> oracleKeywords) {
-        return OracleQuery.builder()
+    public static AnalyzedQuery of(ParsedQuery query, Set<Rule> rules) {
+        return AnalyzedQuery.builder()
                 .query(query)
-                .keywords(oracleKeywords)
+                .rules(rules)
                 .build();
     }
 
@@ -38,19 +39,19 @@ public class OracleQuery {
         return query.getSql();
     }
 
-    public String getKeywords() {
-        return keywords.stream()
-                .map(Rule::getOracle)
+    public String getRules() {
+        return rules.stream()
+                .map(Rule::getFrom)
                 .collect(Collectors.joining(", "));
     }
 
     public Boolean isAbleAutoConversion() {
-        return keywords.stream()
+        return rules.stream()
                 .allMatch(Rule::isAvailAutoConversion);
     }
 
     public String getGuidelines() {
-        return keywords.stream()
+        return rules.stream()
                 .filter(Rule::needToNotify)
                 .map(Rule::getNotice)
                 .collect(Collectors.joining("\n"));
@@ -58,9 +59,9 @@ public class OracleQuery {
 
     public String convert() {
         String sql = query.getSql();
-        for (Rule keyword : keywords) {
+        for (Rule rule : rules) {
             // 대소문자 구분 없이 전체 단어 일치
-            sql = sql.replaceAll("(?i)\\b" + keyword.getOracle() + "\\b", keyword.getMysql());
+            sql = sql.replaceAll("(?i)\\b" + rule.getFrom() + "\\b", rule.getTo());
         }
         return sql;
     }

@@ -1,9 +1,10 @@
 package org.example.jct.converter;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.jct.data.OracleQuery;
-import org.example.jct.data.ParsedQuery;
-import org.example.jct.parser.MyBatisXmlParser;
+import org.example.jct.analyzer.AnalyzedQuery;
+import org.example.jct.parser.ParsedQuery;
+import org.example.jct.parser.QueryParser;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Element;
 
@@ -17,29 +18,30 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class QueryConverter {
 
-    public void convert(List<File> xmlFiles, List<OracleQuery> oracleQueryList) {
-        Map<ParsedQuery, OracleQuery> queryMap = oracleQueryList.stream()
-                .collect(Collectors.toMap(OracleQuery::getKey, e -> e));
+    private final QueryParser queryParser;
 
-        MyBatisXmlParser xmlParser = new MyBatisXmlParser();
+    public void convert(List<File> files, List<AnalyzedQuery> analyzedQueryList) {
+        Map<ParsedQuery, AnalyzedQuery> queryMap = analyzedQueryList.stream()
+                .collect(Collectors.toMap(AnalyzedQuery::getKey, e -> e));
 
-        for (File file : xmlFiles) {
+        for (File file : files) {
             try {
                 Path filePath = file.toPath();
                 String content = new String(Files.readAllBytes(filePath));
 
-                List<Element> elements = xmlParser.getElements(file);
+                List<Element> elements = queryParser.getElements(file);
                 for (Element element : elements) {
                     ParsedQuery parsedQuery = ParsedQuery.of(file, element);
 
-                    OracleQuery oracleQuery = queryMap.get(parsedQuery);
-                    if (oracleQuery != null && oracleQuery.isAbleAutoConversion()) {
+                    AnalyzedQuery analyzedQuery = queryMap.get(parsedQuery);
+                    if (analyzedQuery != null && analyzedQuery.isAbleAutoConversion()) {
                         // 원본 쿼리
-                        String sourceSql = oracleQuery.getSql();
+                        String sourceSql = analyzedQuery.getSql();
                         // 대체할 쿼리
-                        String targetSql = oracleQuery.convert();
+                        String targetSql = analyzedQuery.convert();
 
                         // 파일 내용 중 sourceSql을 targetSql로 대체
                         if (content.contains(sourceSql)) {

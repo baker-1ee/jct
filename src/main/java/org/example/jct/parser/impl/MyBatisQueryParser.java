@@ -1,7 +1,8 @@
-package org.example.jct.parser;
+package org.example.jct.parser.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.jct.data.ParsedQuery;
+import org.example.jct.parser.ParsedQuery;
+import org.example.jct.parser.QueryParser;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -24,15 +25,13 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class MyBatisXmlParser {
+public class MyBatisQueryParser implements QueryParser {
 
     private static final List<String> ELEMENT_TAG_NAMES = Arrays.asList("select", "insert", "update", "delete", "sql");
 
-    /**
-     * xml 파일에서 mybatis 구문 파싱하여 query 추출
-     */
-    public List<ParsedQuery> parse(List<File> xmlFiles) {
-        return xmlFiles.stream()
+    @Override
+    public List<ParsedQuery> parse(List<File> files) {
+        return files.stream()
                 .map(this::parse)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
@@ -55,6 +54,7 @@ public class MyBatisXmlParser {
         return queries;
     }
 
+    @Override
     public List<Element> getElements(File file) {
         List<Element> elements = new ArrayList<>();
         try {
