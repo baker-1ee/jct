@@ -31,7 +31,8 @@ public class QueryConverter {
         for (File file : files) {
             try {
                 Path filePath = file.toPath();
-                String content = Files.readString(filePath, StandardCharsets.UTF_8);
+                // UTF-8 인코딩으로 파일 읽기
+                String content = new String(Files.readAllBytes(filePath), StandardCharsets.UTF_8);
 
                 List<Element> elements = queryParser.getElements(file);
                 for (Element element : elements) {
@@ -51,7 +52,8 @@ public class QueryConverter {
                     }
                 }
 
-                Files.writeString(filePath, content, StandardCharsets.UTF_8);
+                // UTF-8 인코딩으로 파일 쓰기
+                Files.write(filePath, content.getBytes(StandardCharsets.UTF_8));
 
             } catch (IOException e) {
                 log.error("QueryConverter error {}", file.getPath(), e);

@@ -27,13 +27,15 @@ public class FileCopier {
                 Path targetPath = tgtDir.resolve(srcDir.relativize(sourcePath));
                 Files.createDirectories(targetPath.getParent());
 
-                // 파일을 UTF-8 인코딩으로 읽기
-                String content = Files.readString(sourcePath, StandardCharsets.UTF_8);
+                if (!Files.exists(targetPath)) {
+                    Files.copy(sourcePath, targetPath);
+                } else {
+                    log.info("File already exists, skipping: {}", targetPath);
+                }
 
-                // 파일을 UTF-8 인코딩으로 쓰기
-                Files.writeString(targetPath, content, StandardCharsets.UTF_8);
-
-                log.info("File copied: {}", targetPath);
+                // 파일을 UTF-8 인코딩으로 읽고 쓰기
+                String content = new String(Files.readAllBytes(targetPath), StandardCharsets.UTF_8);
+                Files.write(targetPath, content.getBytes(StandardCharsets.UTF_8));
             }
         } catch (IOException e) {
             log.error("File Copier error", e);
