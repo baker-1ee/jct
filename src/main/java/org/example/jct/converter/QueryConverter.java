@@ -41,13 +41,19 @@ public class QueryConverter {
                     AnalyzedQuery analyzedQuery = queryMap.get(parsedQuery);
                     if (analyzedQuery != null && analyzedQuery.isAbleAutoConversion()) {
                         // 원본 쿼리
-                        String sourceSql = analyzedQuery.getSql();
+                        String sourceSql = analyzedQuery.getSql().trim();
                         // 대체할 쿼리
-                        String targetSql = analyzedQuery.convert();
+                        String targetSql = analyzedQuery.convert().trim();
+
+                        if (!sourceSql.equals(targetSql)) {
+                            System.out.println("변환 성공 = " + analyzedQuery.getQueryId());
+                        }
 
                         // 파일 내용 중 sourceSql을 targetSql로 대체
                         if (content.contains(sourceSql)) {
                             content = content.replace(sourceSql, targetSql);
+                            System.out.println(sourceSql);
+                            System.out.println(targetSql);
                         }
                     }
                 }
