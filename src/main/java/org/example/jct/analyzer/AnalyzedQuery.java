@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 public class AnalyzedQuery {
     private ParsedQuery query;
     private Set<Rule> rules;
+    private final String TAB = "\t\t\t";
+    private final String ENTER = "\n";
 
     public static AnalyzedQuery of(ParsedQuery query, Set<Rule> rules) {
         return AnalyzedQuery.builder()
@@ -58,11 +60,28 @@ public class AnalyzedQuery {
     }
 
     public String convert() {
-        String sql = query.getSql();
+        String sql = applyRules(query.getSql());
+        if (!isAbleAutoConversion()) {
+            sql = addConversionNotice(sql);
+        }
+        return sql;
+    }
+
+    private String applyRules(String sql) {
         for (Rule rule : rules) {
             // 대소문자 구분 없이 전체 단어 일치
             sql = sql.replaceAll("(?i)\\b" + rule.getFrom() + "\\b", rule.getTo());
         }
         return sql;
+    }
+
+    private String addConversionNotice(String sql) {
+        StringBuilder comment = new StringBuilder(ENTER)
+                .append(TAB).append("/** [직접 변환 필요]").append(ENTER);
+        rules.stream()
+                .filter(Rule::needToNotify)
+                .forEach(rule -> comment.append(TAB).append(rule.getNotice()).append(ENTER));
+        comment.append(TAB).append("**/").append(ENTER);
+        return comment.append(TAB).append(sql).toString();
     }
 }

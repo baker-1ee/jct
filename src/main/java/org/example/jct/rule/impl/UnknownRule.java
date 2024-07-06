@@ -23,7 +23,7 @@ public class UnknownRule implements Rule {
 
     @Override
     public String getTo() {
-        return null;
+        return unknownKeyword;
     }
 
     @Override
