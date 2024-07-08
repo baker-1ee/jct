@@ -10,6 +10,7 @@
                     MEMBER_ID AS ID, /* 한글 상태 */
                     NAME AS NAME,
                     my_Function(NAME) AS XYZ,
+                    to_date(DATE),
               FROM MEMBERS
              WHERE MEMBER_ID = #{memberId}
         ]]>
