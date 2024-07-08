@@ -32,6 +32,11 @@ public class ParsedQuery {
         return key.getId();
     }
 
+    public String getSqlErasedComment() {
+        String pureSql = sql.replaceAll("(?s)/\\*.*?\\*/", "");
+        return pureSql.trim();
+    }
+
     @EqualsAndHashCode
     @ToString
     @Builder

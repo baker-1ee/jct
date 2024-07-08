@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static java.util.stream.Collectors.joining;
@@ -44,8 +45,22 @@ public class RuleService {
         );
     }
 
-    public Rule findByFrom(String from) {
-        return ruleRepository.findByFrom(from)
-                .orElseGet(() -> UnknownRule.of(from));
+    public Rule findKeyword(String name) {
+        return ruleRepository.findByFrom(name)
+                .orElseGet(() -> UnknownRule.of(name));
+    }
+
+    public Optional<Rule> findFunctionOpt(String name) {
+        Optional<Rule> fromRule = ruleRepository.findByFrom(name);
+        if (fromRule.isPresent()) {
+            return fromRule;
+        }
+        // 이미 변환 완료된 함수에 대해서는 추가로 변환할 필요 없기 때문에
+        Optional<Rule> toRule = ruleRepository.findByTo(name);
+        if (toRule.isPresent()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(UnknownRule.of(name));
     }
 }

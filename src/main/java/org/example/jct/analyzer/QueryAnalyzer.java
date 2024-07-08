@@ -28,21 +28,19 @@ public class QueryAnalyzer {
     }
 
     private AnalyzedQuery analyze(ParsedQuery query) {
-        Set<Rule> oracleKeywords = new LinkedHashSet<>();
+        Set<Rule> rules = new LinkedHashSet<>();
 
-        // Match defined rules
-        Matcher matcher = ruleService.getPattern().matcher(query.getSql());
+        Matcher matcher = ruleService.getPattern().matcher(query.getSqlErasedComment());
         while (matcher.find()) {
-            oracleKeywords.add(ruleService.findByFrom(matcher.group()));
+            rules.add(ruleService.findKeyword(matcher.group()));
         }
-
-        // Match functions not defined in rules
-        Matcher functionMatcher = FUNCTION_PATTERN.matcher(query.getSql());
+        
+        Matcher functionMatcher = FUNCTION_PATTERN.matcher(query.getSqlErasedComment());
         while (functionMatcher.find()) {
-            oracleKeywords.add(ruleService.findByFrom(functionMatcher.group()));
+            ruleService.findFunctionOpt(functionMatcher.group()).ifPresent(rules::add);
         }
 
-        return AnalyzedQuery.of(query, oracleKeywords);
+        return AnalyzedQuery.of(query, rules);
     }
 
 }

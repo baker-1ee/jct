@@ -11,4 +11,6 @@ public interface RuleRepository {
 
     Optional<Rule> findByFrom(String from);
 
+    Optional<Rule> findByTo(String to);
+
 }

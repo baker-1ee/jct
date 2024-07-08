@@ -1,12 +1,13 @@
 package org.example.jct.rule.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.jct.rule.Rule;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@ToString
+@EqualsAndHashCode
 @Builder
 public class UnknownRule implements Rule {
 

@@ -1,13 +1,13 @@
 package org.example.jct.rule.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.example.jct.rule.Rule;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@ToString
+@EqualsAndHashCode
 public class MigrationRule implements Rule {
 
     private String oracle;

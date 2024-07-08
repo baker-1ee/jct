@@ -3,7 +3,7 @@
     "oracle": "NVL",
     "mysql": "IFNULL",
     "isAuto": true,
-    "notice": "[자동 변환 가능] NVL -> IFNULL"
+    "notice": "[자동 변환] NVL -> IFNULL"
   },
   {
     "oracle": "NVL2",
@@ -15,7 +15,13 @@
     "oracle": "SYSDATE",
     "mysql": "NOW()",
     "isAuto": true,
-    "notice": "[자동 변환 가능] SYSDATE -> NOW()"
+    "notice": "[자동 변환] SYSDATE -> NOW()"
+  },
+  {
+    "oracle": "NOW",
+    "mysql": "NOW",
+    "isAuto": true,
+    "notice": ""
   },
   {
     "oracle": "SELECT",
