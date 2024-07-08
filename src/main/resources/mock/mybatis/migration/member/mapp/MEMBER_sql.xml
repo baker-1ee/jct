@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "classpath:dtd/mybatis-3-mapper.dtd">
+<!--
+    한글 깨지면 안됨.
+-->
+<mapper namespace="com.org.example.member.service.dao.mapp.MEMBER01MappDAO">
+    <select id="selectMember" parameterType="String" resultType="String">
+        <![CDATA[
+            SELECT /* MEMBER01MappDAO.selectMember */
+                    MEMBER_ID AS ID, /* 한글 상태 */
+                    NAME AS NAME,
+                    my_Function(NAME) AS XYZ,
+              FROM MEMBERS
+             WHERE MEMBER_ID = #{memberId}
+        ]]>
+    </select>
+
+    <insert id="insertMember" parameterType="com.org.example.member.vo.MemberSaveVO">
+        <![CDATA[
+            INSERT INTO MEMBER (
+                     MEMBER_ID
+                    ,NAME
+                    ,NICKNAME
+                    ,CREATED_DT
+                ) VALUES (
+                     #{memberId}
+                    ,#{name}
+                    ,LPAD(#{nickName}, 20, '*'),
+                    ,sysdate
+                )
+        ]]>
+    </insert>
+</mapper>
