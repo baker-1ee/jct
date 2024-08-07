@@ -61,27 +61,36 @@ public class AnalyzedQuery {
 
     public String convert() {
         String sql = applyRules(query.getSql());
-        if (!isAbleAutoConversion()) {
-            sql = addConversionNotice(sql);
-        }
-        return sql;
+        return addSqlComment(sql);
     }
 
     private String applyRules(String sql) {
         for (Rule rule : rules) {
-            // 대소문자 구분 없이 전체 단어 일치
-            sql = sql.replaceAll("(?i)\\b" + rule.getFrom() + "\\b", rule.getTo());
+            if (rule.isAvailAutoConversion()) {
+                // 대소문자 구분 없이 전체 단어 일치
+                sql = sql.replaceAll("(?i)\\b" + rule.getFrom() + "\\b", rule.getTo());
+            }
         }
         return sql;
     }
 
-    private String addConversionNotice(String sql) {
-        StringBuilder comment = new StringBuilder(ENTER)
-                .append(TAB).append("/** [직접 변환 필요]").append(ENTER);
-        rules.stream()
-                .filter(Rule::needToNotify)
-                .forEach(rule -> comment.append(TAB).append(rule.getNotice()).append(ENTER));
-        comment.append(TAB).append("**/").append(ENTER);
-        return comment.append(TAB).append(sql).toString();
+    private String addSqlComment(String sql) {
+        // 이미 변환 완료건은 그대로 반환
+        if (sql.contains("/** [JCT-AUTO-CONVERSION-SUCCESS] **/")) {
+            return sql;
+        } else {
+            if (isAbleAutoConversion()) {
+                return "/** [JCT-AUTO-CONVERSION-SUCCESS] **/" + ENTER + TAB + sql;
+            } else {
+                String originSql = sql.replaceAll("(?s)/\\*\\* \\[JCT-AUTO-CONVERSION-FAIL\\].*?\\*/\\s*", "");
+                StringBuilder comment = new StringBuilder(ENTER)
+                        .append(TAB).append("/** [JCT-AUTO-CONVERSION-FAIL]").append(ENTER);
+                rules.stream()
+                        .filter(Rule::needToNotify)
+                        .forEach(rule -> comment.append(TAB).append(rule.getNotice()).append(ENTER));
+                comment.append(TAB).append("**/").append(ENTER);
+                return comment.append(TAB).append(originSql).toString();
+            }
+        }
     }
 }
